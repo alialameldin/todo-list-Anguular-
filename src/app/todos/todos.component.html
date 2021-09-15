@@ -1,0 +1,76 @@
+<section class="heading">
+  <h1 class="title is-1 has-text-centered">Todos</h1>
+</section>
+
+<div class="container todo-box-container">
+  <div class="todo-box">
+
+    <form #form = "ngForm" (ngSubmit) = "onSubmitForm(form)">
+      <h2 class="title is-5">New todo</h2>
+
+      <div class="field is-grouped" style="margin: 0;">
+        <p class="control is-expanded">
+          <input ngModel #todoTextField = "ngModel" required minlength="2" name = "text" class="input" type="text" placeholder="add new todo here...."/>
+        </p>
+        <p class="control">
+          <button type = "submit" class="button gradient-btn">
+            <i class="material-icons">add</i>
+            ADD
+          </button>
+        </p>
+      </div>
+
+      <div *ngIf = "todoTextField.invalid && showValidationErrors">
+        <p class="help is-danger" *ngIf="todoTextField.errors!.required">Please enter the text of your todo</p>
+        <p class="help is-danger" *ngIf="todoTextField.errors!.minlength">Todo text must be at least 2 characters</p>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="container">
+
+    <div class="todo-list">
+
+      <!--bkol basata elfekra hena eni bab3at todo ka property binding mn todo-item.component.ts 34an hasta5demha fe html, 34an hab3atha ka parameter
+        liltoggleCompleted function, w f event binding mn html lil todo-item.component.ts f (todoClicked) = "toggleCompleted(todo)" w (editClicked) = "editTodo(todo)">-->
+      <!-- el todos (elli b get fehom el initial data) elli mowgoden felcomponent dah hab3athomlk f todo var 34an yero7o li component app-todo-item -->
+      <app-todo-item
+      *ngFor = "let todo of todos"
+      [todo] = "todo"
+      (todoClicked) = "toggleCompleted(todo)"
+      (editClicked) = "editTodo(todo)"
+      (deleteClicked) = "deleteTodo(todo)">
+    </app-todo-item>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- notes
+0- elmola5as howa 3andy form ba5od feha elma3lomat 3an tare2 textField w elma3lomat deh batba3ha f makan eltext elli felsection of writting
+1- [] = ""  .....> in property binding, send info from component to html (todos.completed)
+2- formGroup form has a formControl text (text field)
+  form (formGroup) has form controls:
+      - controls
+      - value {any text written}
+      - valid
+3- mn el7agat elmohima bardo ana 3ayez msg elvalidations deh tezhar fqt 3and elerrors bs mesh3alatool zahra 34an kda 7atetha feconditions
+4- elta3del ela5er felvalidation: tool manta valid mesh hatala3 errors wla had5ol felcondition bta3ha asln
+  enma lw invalid, had5ol felconditions w atl3 elerror msgs
+5- main operation that we did is (get todo, add todo, update todo, delete a todo)
+6- elta2sema hia eni elform tkon f componenet lewa7daha wel text wel edit w delete yekono component lewa7dohom
+7- fel dialogBox elgeded 3ayez a5od eltext elli maktoob fel dialogBox dah w a5azeno f updatedTodo, w hia deh elli hazhera fe mkan elold text
+-->
